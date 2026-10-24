@@ -1,0 +1,720 @@
+
+/* ==========================================================
+   KNOWLEDGE POINT EDU HUB
+   RESPONSIVE STYLESHEET
+   Works with: css/style.css
+   Devices: Desktop, Laptop, Tablet, Mobile
+   ========================================================== */
+
+
+/* ==========================================================
+   1. RESPONSIVE SAFETY RULES
+   ========================================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: clip;
+}
+
+img,
+video,
+iframe,
+svg {
+    max-width: 100%;
+}
+
+input,
+textarea,
+select,
+button {
+    max-width: 100%;
+}
+
+.container {
+    width: min(1180px, calc(100% - 40px));
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+/* ==========================================================
+   2. LOGO SIZE PROTECTION
+   Prevents the logo image from covering the screen
+   ========================================================== */
+
+.site-header .navbar .logo {
+    display: flex !important;
+    flex: 0 0 auto;
+    width: fit-content;
+    max-width: 200px;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.site-header .navbar .logo .logo-text {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.site-header .navbar .logo .logo-circle {
+    display: flex !important;
+    position: relative !important;
+    flex: 0 0 58px !important;
+    width: 58px !important;
+    min-width: 58px !important;
+    max-width: 58px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+    max-height: 58px !important;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden !important;
+    padding: 4px;
+    border-radius: 50% !important;
+    box-sizing: border-box !important;
+}
+
+.site-header .navbar .logo .logo-image {
+    display: block !important;
+    position: static !important;
+    flex: 0 0 auto;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    object-fit: contain !important;
+    border-radius: 50%;
+    transform: none !important;
+}
+
+
+/* ==========================================================
+   3. LARGE DESKTOPS
+   Screens wider than 1400px
+   ========================================================== */
+
+@media (min-width: 1400px) {
+    .container {
+        width: min(1240px, calc(100% - 64px));
+    }
+
+    .hero {
+        gap: 70px;
+        padding-top: 90px;
+        padding-bottom: 90px;
+    }
+
+    .hero-content h1 {
+        font-size: 4.4rem;
+    }
+
+    .subject-grid {
+        gap: 26px;
+    }
+}
+
+
+/* ==========================================================
+   4. LAPTOPS AND SMALL DESKTOPS
+   Screens up to 1200px
+   ========================================================== */
+
+@media (max-width: 1200px) {
+    .container {
+        width: calc(100% - 40px);
+    }
+
+    .navbar {
+        gap: 18px;
+    }
+
+    .nav-links {
+        gap: 3px;
+    }
+
+    .nav-links a {
+        padding: 8px 10px;
+        font-size: 0.87rem;
+    }
+
+    .hero {
+        gap: 35px;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(2.5rem, 4.5vw, 3.8rem);
+    }
+
+    .subject-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+
+/* ==========================================================
+   5. TABLETS AND SMALL LAPTOPS
+   Screens up to 1000px
+   ========================================================== */
+
+@media (max-width: 1000px) {
+    .navbar {
+        flex-wrap: wrap;
+        min-height: 90px;
+        gap: 15px;
+    }
+
+    .site-header .navbar .logo {
+        max-width: 180px;
+    }
+
+    .nav-links {
+        flex: 1 1 60%;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .nav-links a {
+        padding: 7px 9px;
+        font-size: 0.83rem;
+    }
+
+    .hero {
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+        gap: 25px;
+        min-height: 420px;
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(2.25rem, 4.4vw, 3.2rem);
+    }
+
+    .hero-card {
+        padding: 28px 20px;
+    }
+
+    .subject-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .contact-layout {
+        grid-template-columns: 1fr 1.2fr;
+        gap: 20px;
+    }
+
+    .section {
+        padding-top: 58px;
+        padding-bottom: 58px;
+    }
+}
+
+
+/* ==========================================================
+   6. TABLETS AND MOBILE NAVIGATION
+   Screens up to 760px
+   ========================================================== */
+
+@media (max-width: 760px) {
+    html {
+        scroll-padding-top: 100px;
+    }
+
+    .container {
+        width: calc(100% - 30px);
+    }
+
+    /* Header */
+
+    .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .navbar {
+        display: flex;
+        position: relative;
+        min-height: 84px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding-top: 9px;
+        padding-bottom: 9px;
+    }
+
+    /* Logo */
+
+    .site-header .navbar .logo {
+        flex: 0 1 auto;
+        max-width: 175px;
+        gap: 4px;
+    }
+
+    .site-header .navbar .logo .logo-title {
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+
+    .site-header .navbar .logo .logo-subtitle {
+        font-size: 9px;
+        letter-spacing: 4px;
+    }
+
+    .site-header .navbar .logo .logo-circle {
+        flex-basis: 46px !important;
+        width: 46px !important;
+        min-width: 46px !important;
+        max-width: 46px !important;
+        height: 46px !important;
+        min-height: 46px !important;
+        max-height: 46px !important;
+    }
+
+    /* Menu toggle button */
+
+    .menu-toggle {
+        display: inline-flex !important;
+        flex: 0 0 42px;
+        width: 42px;
+        min-width: 42px;
+        height: 42px;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border-radius: 10px;
+        font-size: 1.5rem;
+    }
+
+    /* Collapsible navigation.
+       Your JavaScript should toggle the "open" class. */
+
+    .nav-links {
+        display: none;
+        flex: 0 0 100%;
+        width: 100%;
+        min-width: 0;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 5px;
+        margin-top: 5px;
+        padding: 12px;
+        border: 1px solid rgba(231, 189, 85, 0.2);
+        border-radius: 14px;
+        background: #0b120d;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-links.open {
+        display: flex !important;
+    }
+
+    .nav-links a {
+        display: flex;
+        width: 100%;
+        min-height: 42px;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 10px 13px;
+        border-radius: 8px;
+        font-size: 0.94rem;
+    }
+
+    /* Home hero */
+
+    .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 30px;
+        min-height: auto;
+        padding-top: 48px;
+        padding-bottom: 48px;
+    }
+
+    .hero-content {
+        text-align: center;
+    }
+
+    .hero-content h1 {
+        max-width: 680px;
+        margin-right: auto;
+        margin-left: auto;
+        font-size: clamp(2.1rem, 7vw, 3.2rem);
+        letter-spacing: -0.7px;
+    }
+
+    .hero-content > p:not(.eyebrow) {
+        margin-right: auto;
+        margin-left: auto;
+        font-size: 1rem;
+    }
+
+    .hero-actions {
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .hero-card {
+        width: 100%;
+        max-width: 430px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    /* Page headings */
+
+    .page-hero {
+        padding-top: 45px;
+        padding-bottom: 25px;
+    }
+
+    .page-hero h1 {
+        font-size: clamp(2rem, 7vw, 2.8rem);
+    }
+
+    .section {
+        padding-top: 45px;
+        padding-bottom: 45px;
+    }
+
+    .section-heading {
+        margin-bottom: 28px;
+    }
+
+    .section-heading h2,
+    .section h2 {
+        font-size: clamp(1.55rem, 5vw, 2rem);
+    }
+
+    /* Cards */
+
+    .subject-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .subject-card {
+        min-width: 0;
+        padding: 18px;
+    }
+
+    .subject-card h3 {
+        font-size: 1.05rem;
+        overflow-wrap: anywhere;
+    }
+
+    .subject-card p {
+        font-size: 0.87rem;
+    }
+
+    .subject-icon {
+        width: 46px;
+        height: 46px;
+        font-size: 1.4rem;
+    }
+
+    .feature-grid,
+    .resource-list {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    .feature-card {
+        padding: 22px;
+    }
+
+    /* Contact form */
+
+    .contact-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+    }
+
+    .contact-form {
+        width: 100%;
+    }
+
+    /* Quiz and progress */
+
+    .quiz-question,
+    .goal-form,
+    .goal-list,
+    .stat-card {
+        min-width: 0;
+    }
+
+    .quiz-question label {
+        overflow-wrap: anywhere;
+    }
+
+    /* Buttons */
+
+    .btn {
+        min-height: 44px;
+        padding: 10px 18px;
+    }
+
+    /* Footer */
+
+    .footer-content {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+}
+
+
+/* ==========================================================
+   7. MOBILE PHONES
+   Screens up to 480px
+   ========================================================== */
+
+@media (max-width: 480px) {
+    .container {
+        width: calc(100% - 24px);
+    }
+
+    .navbar {
+        gap: 8px;
+    }
+
+    .site-header .navbar .logo {
+        max-width: 155px;
+    }
+
+    .site-header .navbar .logo .logo-title {
+        font-size: 11px;
+        letter-spacing: 0.8px;
+    }
+
+    .site-header .navbar .logo .logo-subtitle {
+        font-size: 8px;
+        letter-spacing: 3.5px;
+    }
+
+    .site-header .navbar .logo .logo-circle {
+        flex-basis: 42px !important;
+        width: 42px !important;
+        min-width: 42px !important;
+        max-width: 42px !important;
+        height: 42px !important;
+        min-height: 42px !important;
+        max-height: 42px !important;
+    }
+
+    .menu-toggle {
+        flex-basis: 40px;
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
+    }
+
+    .hero {
+        padding-top: 38px;
+        padding-bottom: 38px;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(1.95rem, 8.5vw, 2.6rem);
+    }
+
+    .hero-content > p:not(.eyebrow) {
+        font-size: 0.94rem;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
+    }
+
+    .hero-card {
+        padding: 25px 18px;
+    }
+
+    .hero-emblem {
+        width: 105px;
+        height: 105px;
+        font-size: 2.1rem;
+    }
+
+    .subject-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 13px;
+    }
+
+    .subject-card {
+        padding: 20px;
+    }
+
+    .feature-card {
+        padding: 18px;
+    }
+
+    .page-hero h1 {
+        font-size: 2.05rem;
+        overflow-wrap: anywhere;
+    }
+
+    .search-input {
+        min-width: 0;
+        font-size: 16px;
+    }
+
+    .quiz-question {
+        padding: 18px;
+    }
+
+    .quiz-question label {
+        padding: 9px;
+        font-size: 0.92rem;
+    }
+
+    .contact-form .btn,
+    .goal-form .btn {
+        width: 100%;
+    }
+
+    .cta-section {
+        padding-top: 45px;
+        padding-bottom: 45px;
+    }
+}
+
+
+/* ==========================================================
+   8. VERY SMALL PHONES
+   Screens up to 360px
+   ========================================================== */
+
+@media (max-width: 360px) {
+    .container {
+        width: calc(100% - 20px);
+    }
+
+    .site-header .navbar .logo {
+        max-width: 140px;
+    }
+
+    .site-header .navbar .logo .logo-title {
+        font-size: 10px;
+    }
+
+    .site-header .navbar .logo .logo-subtitle {
+        font-size: 7px;
+        letter-spacing: 3px;
+    }
+
+    .site-header .navbar .logo .logo-circle {
+        flex-basis: 38px !important;
+        width: 38px !important;
+        min-width: 38px !important;
+        max-width: 38px !important;
+        height: 38px !important;
+        min-height: 38px !important;
+        max-height: 38px !important;
+    }
+
+    .menu-toggle {
+        flex-basis: 36px;
+        width: 36px;
+        min-width: 36px;
+        height: 36px;
+        font-size: 1.25rem;
+    }
+
+    .hero-content h1 {
+        font-size: 1.85rem;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 10px 12px;
+        font-size: 0.88rem;
+    }
+
+    .section-heading h2,
+    .section h2 {
+        font-size: 1.5rem;
+    }
+}
+
+
+/* ==========================================================
+   9. LANDSCAPE PHONES
+   ========================================================== */
+
+@media (max-height: 500px) and (orientation: landscape) {
+    .navbar {
+        min-height: 70px;
+    }
+
+    .site-header .navbar .logo .logo-circle {
+        flex-basis: 38px !important;
+        width: 38px !important;
+        min-width: 38px !important;
+        max-width: 38px !important;
+        height: 38px !important;
+        min-height: 38px !important;
+        max-height: 38px !important;
+    }
+
+    .hero {
+        min-height: auto;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+}
+
+
+/* ==========================================================
+   10. ACCESSIBILITY AND REDUCED MOTION
+   ========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d0a">
+    <title>My Progress | Knowledge Point EDU HUB</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<header class="site-header">
+    <nav class="navbar container">
+        <a href="index.html" class="logo">
+            <span class="logo-text"><span class="logo-title">KNOWLEDGE POINT</span><span class="logo-subtitle">EDU HUB</span></span>
+            <span class="logo-circle"><img src="assets/images/logo.png" alt="Knowledge Point Logo" class="logo-image"></span>
+        </a>
+        <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+        <div class="nav-links">
+            <a href="index.html">Home</a><a href="notes.html">Notes</a>
+            <a href="quiz.html">Quiz</a><a href="past-papers.html">Past Papers</a>
+            <a href="progress.html" class="active">My Progress</a><a href="contact.html">Contact</a>
+        </div>
+    </nav>
+</header>
+
+<main class="container">
+    <section class="page-hero">
+        <p class="eyebrow">YOUR LEARNING JOURNEY</p>
+        <h1>My <span>Progress</span></h1>
+        <p>Review your study goals and plan your next learning session.</p>
+    </section>
+
+    <section class="section">
+        <div class="feature-grid">
+            <article class="feature-card">
+                <h3>Quizzes Completed</h3>
+                <p class="stat-number">—</p>
+                <p>Your completed quiz count will appear here when tracking is connected.</p>
+            </article>
+            <article class="feature-card">
+                <h3>Average Score</h3>
+                <p class="stat-number">—</p>
+                <p>Your average score will appear here when results are saved.</p>
+            </article>
+            <article class="feature-card">
+                <h3>Notes Reviewed</h3>
+                <p class="stat-number">—</p>
+                <p>Track the resources you have finished studying.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="section feature-section">
+        <h2>My Study Goals</h2>
+        <p>Add your personal goals below. This simple example does not save them after you reload the page.</p>
+
+        <form id="goal-form" class="goal-form">
+            <label for="goal-input">Study goal</label>
+            <input id="goal-input" class="search-input" type="text" placeholder="e.g. Revise Biology Chapter 1" required>
+            <button class="btn btn-primary" type="submit">Add Goal</button>
+        </form>
+        <ul id="goal-list" class="goal-list"></ul>
+    </section>
+</main>
+
+<footer class="site-footer"><div class="container footer-content">
+    <p><strong>Knowledge Point EDU HUB</strong></p>
+    <p>© <span class="current-year">2026</span> Knowledge Point EDU HUB</p>
+</div></footer>
+
+<script src="js/app.js"></script>
+<script>
+    const goalForm = document.getElementById('goal-form');
+    const goalInput = document.getElementById('goal-input');
+    const goalList = document.getElementById('goal-list');
+
+    goalForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const text = goalInput.value.trim();
+        if (!text) return;
+
+        const item = document.createElement('li');
+        const label = document.createElement('label');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+
+        label.append(checkbox, document.createTextNode(' ' + text));
+        item.appendChild(label);
+        goalList.appendChild(item);
+
+        goalInput.value = '';
+        goalInput.focus();
+    });
+</script>
+</body>
+</html>

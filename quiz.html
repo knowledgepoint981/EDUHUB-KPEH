@@ -1,0 +1,1474 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz System | Knowledge Point EDU HUB</title>
+    <meta name="description" content="Practice and attempt HSSC subject-wise MCQs, chapter tests, and full-book quizzes on Knowledge Point EDU HUB.">
+    <meta name="theme-color" content="#0b0d12">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        :root {
+            --gold: #f5c542;
+            --green: #20c997;
+            --bg: #0b0d12;
+            --card: #141821;
+            --card2: #10141c;
+            --border: rgba(255,255,255,.10);
+            --muted: #a7afbd;
+            --danger: #ff6b6b;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: #f4f5f7;
+        }
+
+        button, input, select { font: inherit; }
+
+        button { cursor: pointer; }
+
+        .quiz-hero {
+            padding: 48px 20px 32px;
+            text-align: center;
+            background: radial-gradient(ellipse at top, rgba(245,197,66,.13), transparent 65%);
+        }
+
+        .quiz-hero h1 {
+            margin: 0 0 12px;
+            font-size: clamp(30px, 5vw, 46px);
+        }
+
+        .quiz-hero h1 span { color: var(--gold); }
+
+        .quiz-hero p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .quiz-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 12px;
+            width: min(750px, 100%);
+            margin: 26px auto 0;
+        }
+
+        .stat {
+            padding: 15px 10px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.025);
+            border-radius: 12px;
+        }
+
+        .stat strong {
+            display: block;
+            color: var(--gold);
+            font-size: 23px;
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .quiz-container {
+            width: min(1150px, 92%);
+            margin: 0 auto 60px;
+        }
+
+        .section-title {
+            margin: 32px 0 18px;
+        }
+
+        .section-title h2 {
+            font-size: 25px;
+            margin: 0 0 8px;
+        }
+
+        .section-title p {
+            color: var(--muted);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 16px;
+        }
+
+        .subject-card {
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            background: var(--card);
+            transition: border-color .2s, transform .2s;
+        }
+
+        .subject-card:hover {
+            border-color: rgba(245,197,66,.6);
+            transform: translateY(-2px);
+        }
+
+        .subject-card h3 {
+            margin: 0 0 7px;
+            font-size: 19px;
+        }
+
+        .subject-card p {
+            color: var(--muted);
+            font-size: 13px;
+            min-height: 38px;
+            line-height: 1.5;
+            margin: 0 0 15px;
+        }
+
+        .subject-actions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 8px;
+        }
+
+        .small-btn {
+            border: 1px solid var(--border);
+            background: var(--card2);
+            color: #f4f5f7;
+            border-radius: 8px;
+            padding: 10px 8px;
+            font-size: 12px;
+            transition: .2s;
+        }
+
+        .small-btn:hover {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .small-btn.primary {
+            color: var(--gold);
+            border-color: rgba(245,197,66,.35);
+        }
+
+        .panel {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 26px;
+        }
+
+        .panel h2, .panel h3 { margin-top: 0; }
+
+        .panel-description {
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .setup-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 17px;
+            margin-top: 22px;
+        }
+
+        .field label, .field-label {
+            display: block;
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .field select, .field input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: #0e1118;
+            color: #fff;
+            outline: none;
+        }
+
+        .field select:focus, .field input:focus {
+            border-color: var(--gold);
+        }
+
+        .radio-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 10px 12px;
+            background: var(--card2);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            color: #e7eaf0;
+            font-size: 13px;
+        }
+
+        .radio-option input { accent-color: var(--green); }
+
+        .main-btn {
+            padding: 13px 18px;
+            border: 0;
+            border-radius: 9px;
+            background: var(--gold);
+            color: #141414;
+            font-weight: 800;
+        }
+
+        .main-btn:hover { filter: brightness(1.05); }
+
+        .secondary-btn {
+            padding: 12px 17px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: transparent;
+            color: #f4f5f7;
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .notice {
+            margin-top: 17px;
+            padding: 13px 15px;
+            border: 1px solid rgba(32,201,151,.25);
+            border-radius: 9px;
+            background: rgba(32,201,151,.06);
+            color: #ccefe4;
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        .notice.warning {
+            border-color: rgba(245,197,66,.35);
+            background: rgba(245,197,66,.06);
+            color: #f7e7b0;
+        }
+
+        .hidden { display: none !important; }
+
+        .quiz-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .quiz-topbar h2 {
+            font-size: 22px;
+            margin: 0;
+        }
+
+        .timer {
+            padding: 10px 14px;
+            border-radius: 9px;
+            border: 1px solid rgba(32,201,151,.3);
+            background: rgba(32,201,151,.07);
+            color: var(--green);
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer.low {
+            border-color: rgba(255,107,107,.4);
+            background: rgba(255,107,107,.08);
+            color: var(--danger);
+        }
+
+        .quiz-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            color: var(--muted);
+            font-size: 13px;
+            margin: 15px 0;
+        }
+
+        .progress-track {
+            height: 6px;
+            background: #252b36;
+            border-radius: 99px;
+            overflow: hidden;
+            margin-bottom: 22px;
+        }
+
+        .progress-fill {
+            width: 0;
+            height: 100%;
+            background: var(--green);
+            transition: width .2s;
+        }
+
+        .question-box {
+            padding: 23px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: var(--card2);
+        }
+
+        .question-number {
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .question-text {
+            font-size: clamp(18px, 2.5vw, 22px);
+            line-height: 1.6;
+            margin: 0 0 22px;
+        }
+
+        .options {
+            display: grid;
+            gap: 11px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            width: 100%;
+            padding: 14px;
+            text-align: left;
+            color: #f4f5f7;
+            background: #171c26;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            line-height: 1.5;
+        }
+
+        .option:hover { border-color: var(--green); }
+
+        .option.selected {
+            border-color: var(--green);
+            background: rgba(32,201,151,.08);
+        }
+
+        .option.correct {
+            border-color: var(--green);
+            background: rgba(32,201,151,.12);
+        }
+
+        .option.incorrect {
+            border-color: var(--danger);
+            background: rgba(255,107,107,.08);
+        }
+
+        .option-letter {
+            display: grid;
+            place-items: center;
+            width: 27px;
+            height: 27px;
+            flex-shrink: 0;
+            border-radius: 7px;
+            background: rgba(255,255,255,.07);
+            font-weight: 800;
+            font-size: 12px;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 13px;
+            border-radius: 9px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .feedback.correct {
+            background: rgba(32,201,151,.08);
+            color: #a8f0d9;
+        }
+
+        .feedback.incorrect {
+            background: rgba(255,107,107,.08);
+            color: #ffc1c1;
+        }
+
+        .question-navigation {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 23px;
+        }
+
+        .number-btn {
+            width: 39px;
+            height: 39px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: #e8ebf0;
+            background: var(--card2);
+        }
+
+        .number-btn.answered {
+            border-color: var(--green);
+            background: rgba(32,201,151,.12);
+        }
+
+        .number-btn.current {
+            outline: 2px solid var(--gold);
+            outline-offset: 1px;
+        }
+
+        .number-btn.flagged {
+            border-color: var(--gold);
+        }
+
+        .nav-legend {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.7;
+            margin-top: 10px;
+        }
+
+        .results-score {
+            font-size: clamp(42px, 8vw, 66px);
+            color: var(--gold);
+            font-weight: 900;
+            margin: 12px 0;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0,1fr));
+            gap: 12px;
+            margin: 23px 0;
+        }
+
+        .result-stat {
+            padding: 15px 10px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .result-stat strong {
+            display: block;
+            font-size: 23px;
+            margin-bottom: 5px;
+        }
+
+        .result-stat span {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .review-item {
+            padding: 17px 0;
+            border-top: 1px solid var(--border);
+            line-height: 1.65;
+        }
+
+        .review-item p { margin: 8px 0; }
+
+        .review-item .answer-good { color: var(--green); }
+        .review-item .answer-bad { color: var(--danger); }
+
+        .quiz-footer {
+            text-align: center;
+            padding: 25px 15px;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        @media (max-width: 900px) {
+            .subject-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+        }
+
+        @media (max-width: 600px) {
+            .quiz-hero { padding-top: 35px; }
+            .quiz-container { width: 94%; }
+            .subject-grid, .setup-grid { grid-template-columns: 1fr; }
+            .subject-card p { min-height: 0; }
+            .panel { padding: 17px; }
+            .question-box { padding: 16px; }
+            .results-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+            .quiz-topbar h2 { font-size: 19px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <nav class="navbar container">
+        <a href="index.html" class="logo">
+            <span class="logo-text">
+                <span class="logo-title">KNOWLEDGE POINT</span>
+                <span class="logo-subtitle">EDU HUB</span>
+            </span>
+            <span class="logo-circle">
+                <img src="assets/images/logo.png" alt="Knowledge Point Logo" class="logo-image">
+            </span>
+        </a>
+
+        <button class="menu-toggle" id="menuToggle" type="button"
+                aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="notes.html">Notes</a>
+            <a href="quiz.html" class="active">Quiz</a>
+            <a href="past-papers.html">Past Papers</a>
+            <a href="progress.html">Progress</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+</header>
+
+<section class="quiz-hero">
+    <h1>Knowledge Point <span>Quiz Arena</span></h1>
+    <p>
+        Practise your concepts or attempt an exam-style test.
+        Select a subject, choose your quiz length, and challenge yourself.
+    </p>
+
+    <div class="quiz-stats">
+        <div class="stat"><strong>09</strong><span>Subjects</span></div>
+        <div class="stat"><strong>0.5</strong><span>Marks per MCQ</span></div>
+        <div class="stat"><strong>40</strong><span>Marks for 80 MCQs</span></div>
+    </div>
+</section>
+
+<main class="quiz-container">
+
+    <section id="selectionSection">
+        <div class="section-title">
+            <h2>Choose Your <span style="color:var(--gold)">Subject</span></h2>
+            <p>Use a subject card for quick setup, or configure your quiz below.</p>
+        </div>
+
+        <div class="subject-grid" id="subjectGrid"></div>
+
+        <section class="panel" id="setupPanel">
+            <h2>Quiz Setup</h2>
+            <p class="panel-description">
+                Select a quiz type and mode. The timer is set automatically
+                according to the number of questions.
+            </p>
+
+            <form id="setupForm">
+                <div class="setup-grid">
+                    <div class="field">
+                        <label for="subjectSelect">Subject</label>
+                        <select id="subjectSelect" required></select>
+                    </div>
+
+                    <div class="field">
+                        <label for="quizType">Quiz Type</label>
+                        <select id="quizType" required>
+                            <option value="15">15 MCQs — 7.5 marks</option>
+                            <option value="30">30 MCQs — 15 marks</option>
+                            <option value="80">80 MCQs — 40 marks</option>
+                            <option value="chapter">Chapter-wise quiz</option>
+                            <option value="book">Full-book quiz</option>
+                        </select>
+                    </div>
+
+                    <div class="field hidden" id="chapterField">
+                        <label for="chapterSelect">Chapter / Unit</label>
+                        <select id="chapterSelect"></select>
+                    </div>
+
+                    <div class="field hidden" id="chapterCountField">
+                        <label for="chapterCount">Questions in this quiz</label>
+                        <select id="chapterCount">
+                            <option value="15">15 MCQs</option>
+                            <option value="30">30 MCQs</option>
+                            <option value="80">80 MCQs</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="classSelect">Class</label>
+                        <select id="classSelect">
+                            <option value="both">HSSC Part I &amp; II</option>
+                            <option value="11">HSSC Part I / Class 11</option>
+                            <option value="12">HSSC Part II / Class 12</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="difficultySelect">Difficulty</label>
+                        <select id="difficultySelect">
+                            <option value="all">All levels</option>
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="margin-top:22px">
+                    <span class="field-label">Quiz Mode</span>
+                    <div class="radio-row">
+                        <label class="radio-option">
+                            <input type="radio" name="mode" value="exam" checked>
+                            Exam Mode
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="mode" value="practice">
+                            Practice Mode
+                        </label>
+                    </div>
+                </div>
+
+                <div class="notice">
+                    <strong>Marking:</strong> Each correct answer earns 0.5 marks.
+                    Incorrect and unanswered questions earn 0 marks.
+                    There is no negative marking.
+                </div>
+
+                <div id="setupNotice" class="notice warning">
+                    This page currently contains a small sample question bank.
+                    Longer quizzes will use all available matching questions until
+                    you add more questions.
+                </div>
+
+                <div class="button-row">
+                    <button class="main-btn" type="submit">Start Quiz →</button>
+                </div>
+            </form>
+        </section>
+    </section>
+
+    <!-- Quiz attempt -->
+    <section class="panel hidden" id="quizSection">
+        <div class="quiz-topbar">
+            <h2 id="quizHeading">Quiz</h2>
+            <div class="timer" id="timerDisplay" aria-live="polite">00:00</div>
+        </div>
+
+        <div class="quiz-meta">
+            <span id="questionCounter">Question 1 of 1</span>
+            <span id="answeredCounter">Answered: 0</span>
+            <span id="marksLabel">0.5 marks per question</span>
+        </div>
+
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="question-box">
+            <div class="question-number" id="questionNumber"></div>
+            <h3 class="question-text" id="questionText"></h3>
+            <div class="options" id="optionsContainer"></div>
+            <div id="feedback" class="hidden" aria-live="polite"></div>
+
+            <div class="button-row">
+                <button type="button" class="secondary-btn" id="prevBtn">← Previous</button>
+                <button type="button" class="secondary-btn" id="nextBtn">Next →</button>
+                <button type="button" class="secondary-btn" id="flagBtn">☆ Mark for Review</button>
+            </div>
+        </div>
+
+        <div class="panel" style="padding:18px;margin-top:18px">
+            <h3 style="margin-bottom:8px">Question Navigator</h3>
+            <p class="panel-description">Select a number to jump to that question.</p>
+            <div class="question-navigation" id="questionNavigation"></div>
+            <p class="nav-legend">
+                Green border = answered. Gold outline = current question.
+                Gold border = marked for review.
+            </p>
+        </div>
+
+        <div class="button-row">
+            <button type="button" class="main-btn" id="submitBtn">Submit Quiz</button>
+            <button type="button" class="secondary-btn" id="cancelQuizBtn">Cancel Quiz</button>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section class="panel hidden" id="resultsSection">
+        <div class="section-title" style="margin-top:0">
+            <h2>Quiz <span style="color:var(--gold)">Results</span></h2>
+            <p id="resultSubtitle"></p>
+        </div>
+
+        <div class="results-score" id="scoreDisplay">0 / 0</div>
+        <p id="percentageDisplay"></p>
+
+        <div class="results-grid">
+            <div class="result-stat"><strong id="correctCount" style="color:var(--green)">0</strong><span>Correct</span></div>
+            <div class="result-stat"><strong id="wrongCount" style="color:var(--danger)">0</strong><span>Incorrect</span></div>
+            <div class="result-stat"><strong id="unansweredCount">0</strong><span>Unanswered</span></div>
+            <div class="result-stat"><strong id="totalCount">0</strong><span>Total MCQs</span></div>
+        </div>
+
+        <div id="resultNotice" class="notice"></div>
+
+        <div class="button-row">
+            <button type="button" class="main-btn" id="reviewBtn">Review Answers</button>
+            <button type="button" class="secondary-btn" id="newQuizBtn">Start Another Quiz</button>
+        </div>
+
+        <div id="reviewContainer" class="hidden" style="margin-top:28px">
+            <h3>Answer Review</h3>
+            <div id="reviewList"></div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="quiz-footer">
+    <p>&copy; <span id="currentYear"></span> Knowledge Point EDU HUB. Learn today, lead tomorrow.</p>
+</footer>
+
+<script>
+"use strict";
+
+/*
+  SAMPLE QUESTION BANK
+  Add more question objects to this array as your question bank grows.
+
+  Every question needs:
+  id, subject, chapter, classLevel, difficulty, question, options,
+  answer (zero-based option index), and explanation.
+*/
+
+const QUESTION_BANK = [
+    // BIOLOGY
+    {
+        id:"bio01", subject:"biology", chapter:"1", classLevel:"11", difficulty:"easy",
+        question:"Which molecule stores hereditary information in most living organisms?",
+        options:["ATP","DNA","Glucose","Cellulose"], answer:1,
+        explanation:"DNA stores hereditary information in most living organisms."
+    },
+    {
+        id:"bio02", subject:"biology", chapter:"2", classLevel:"11", difficulty:"medium",
+        question:"Which type of bond joins amino acids in a polypeptide chain?",
+        options:["Glycosidic bond","Hydrogen bond","Peptide bond","Phosphodiester bond"], answer:2,
+        explanation:"A peptide bond links the amino group of one amino acid to the carboxyl group of another."
+    },
+    {
+        id:"bio03", subject:"biology", chapter:"3", classLevel:"11", difficulty:"easy",
+        question:"Which organelle is the main site of aerobic respiration in eukaryotic cells?",
+        options:["Ribosome","Golgi apparatus","Mitochondrion","Lysosome"], answer:2,
+        explanation:"Mitochondria are the main site of aerobic respiration in eukaryotic cells."
+    },
+
+    // PHYSICS
+    {
+        id:"phy01", subject:"physics", chapter:"1", classLevel:"11", difficulty:"easy",
+        question:"What is the SI unit of force?",
+        options:["Joule","Newton","Watt","Pascal"], answer:1,
+        explanation:"Force is measured in newtons (N), equivalent to kg m s⁻²."
+    },
+    {
+        id:"phy02", subject:"physics", chapter:"2", classLevel:"11", difficulty:"medium",
+        question:"The slope of a displacement-time graph represents:",
+        options:["Acceleration","Force","Velocity","Momentum"], answer:2,
+        explanation:"The slope gives change in displacement divided by change in time, which is velocity."
+    },
+    {
+        id:"phy03", subject:"physics", chapter:"3", classLevel:"11", difficulty:"medium",
+        question:"Centripetal acceleration is directed:",
+        options:["Away from the centre","Towards the centre","Along the tangent","Opposite to velocity in all cases"], answer:1,
+        explanation:"Centripetal acceleration points towards the centre of the circular path."
+    },
+
+    // CHEMISTRY
+    {
+        id:"chem01", subject:"chemistry", chapter:"1", classLevel:"11", difficulty:"easy",
+        question:"One mole of a substance contains approximately:",
+        options:["3.00 × 10⁸ particles","6.022 × 10²³ particles","9.81 particles","1.00 × 10³ particles"], answer:1,
+        explanation:"The Avogadro constant is approximately 6.022 × 10²³ mol⁻¹."
+    },
+    {
+        id:"chem02", subject:"chemistry", chapter:"2", classLevel:"11", difficulty:"medium",
+        question:"What is the molecular geometry of methane (CH₄)?",
+        options:["Linear","Trigonal planar","Tetrahedral","Bent"], answer:2,
+        explanation:"Four bonding pairs around carbon arrange themselves tetrahedrally."
+    },
+    {
+        id:"chem03", subject:"chemistry", chapter:"3", classLevel:"11", difficulty:"medium",
+        question:"Which type of bond results from sharing electron pairs between atoms?",
+        options:["Ionic bond","Covalent bond","Metallic bond","Hydrogen bond"], answer:1,
+        explanation:"A covalent bond involves sharing one or more pairs of electrons."
+    },
+
+    // MATHEMATICS
+    {
+        id:"math01", subject:"mathematics", chapter:"1", classLevel:"11", difficulty:"easy",
+        question:"What is the derivative of x² with respect to x?",
+        options:["x","2x","x³","2"], answer:1,
+        explanation:"Using the power rule, d(x²)/dx = 2x."
+    },
+    {
+        id:"math02", subject:"mathematics", chapter:"2", classLevel:"11", difficulty:"medium",
+        question:"If sin θ = 0 and θ is between 0° and 180°, which value is possible?",
+        options:["30°","45°","90°","None of these"], answer:3,
+        explanation:"Within the open interval from 0° to 180°, sine is positive; the endpoint 180° is excluded."
+    },
+    {
+        id:"math03", subject:"mathematics", chapter:"3", classLevel:"11", difficulty:"easy",
+        question:"What is the value of log₁₀(100)?",
+        options:["1","2","10","100"], answer:1,
+        explanation:"Because 10² = 100, log₁₀(100) = 2."
+    },
+
+    // COMPUTER SCIENCE
+    {
+        id:"cs01", subject:"computer", chapter:"1", classLevel:"11", difficulty:"easy",
+        question:"Which component executes program instructions?",
+        options:["Monitor","CPU","Keyboard","Printer"], answer:1,
+        explanation:"The central processing unit executes instructions and coordinates processing."
+    },
+    {
+        id:"cs02", subject:"computer", chapter:"2", classLevel:"11", difficulty:"medium",
+        question:"Which number system uses only 0 and 1?",
+        options:["Decimal","Octal","Binary","Hexadecimal"], answer:2,
+        explanation:"The binary number system uses the two digits 0 and 1."
+    },
+    {
+        id:"cs03", subject:"computer", chapter:"3", classLevel:"11", difficulty:"easy",
+        question:"Which of these is an example of an input device?",
+        options:["Monitor","Speaker","Keyboard","Projector"], answer:2,
+        explanation:"A keyboard is used to enter data and commands into a computer."
+    },
+
+    // ENGLISH
+    {
+        id:"eng01", subject:"english", chapter:"grammar", classLevel:"both", difficulty:"easy",
+        question:"Choose the grammatically correct sentence.",
+        options:[
+            "She go to school every day.",
+            "She goes to school every day.",
+            "She going to school every day.",
+            "She gone to school every day."
+        ], answer:1,
+        explanation:"In the simple present tense, a third-person singular subject takes a verb ending in -s or -es."
+    },
+    {
+        id:"eng02", subject:"english", chapter:"grammar", classLevel:"both", difficulty:"medium",
+        question:"Identify the adjective in: 'The diligent student completed the task.'",
+        options:["student","completed","diligent","task"], answer:2,
+        explanation:"Diligent describes the noun student, so it is an adjective."
+    },
+    {
+        id:"eng03", subject:"english", chapter:"creative-writing", classLevel:"both", difficulty:"easy",
+        question:"Which feature is most important in a formal report?",
+        options:["Unrelated jokes","Clear organization and factual information","Informal slang throughout","Unverified rumours"], answer:1,
+        explanation:"A formal report should present relevant, organized, and factual information."
+    },
+
+    // URDU
+    {
+        id:"urdu01", subject:"urdu", chapter:"grammar", classLevel:"both", difficulty:"easy",
+        question:"اردو قواعد میں اسم کس کو کہتے ہیں؟",
+        options:["کام کو","نام کو","صفت کو","حرف کو"], answer:1,
+        explanation:"اسم کسی شخص، جگہ، چیز یا کیفیت کے نام کو کہتے ہیں۔"
+    },
+    {
+        id:"urdu02", subject:"urdu", chapter:"grammar", classLevel:"both", difficulty:"medium",
+        question:"لفظ 'خوبصورت' قواعد کی رو سے کیا ہے؟",
+        options:["اسم","فعل","صفت","حرف"], answer:2,
+        explanation:"خوبصورت کسی اسم کی خوبی یا وصف بیان کرتا ہے، اس لیے یہ صفت ہے۔"
+    },
+    {
+        id:"urdu03", subject:"urdu", chapter:"creative-writing", classLevel:"both", difficulty:"easy",
+        question:"درخواست لکھتے وقت کون سی چیز ضروری ہے؟",
+        options:["غیر رسمی زبان","مناسب عنوان اور مؤدبانہ انداز","غیر متعلقہ اشعار","صرف ایک لفظ"], answer:1,
+        explanation:"درخواست میں مناسب عنوان، واضح مقصد اور مؤدبانہ زبان اہم ہیں۔"
+    },
+
+    // ISLAMIAT
+    {
+        id:"isl01", subject:"islamiat", chapter:"1", classLevel:"both", difficulty:"easy",
+        question:"اسلام کے بنیادی ارکان کی تعداد کتنی ہے؟",
+        options:["تین","چار","پانچ","چھ"], answer:2,
+        explanation:"اسلام کے پانچ بنیادی ارکان ہیں۔"
+    },
+    {
+        id:"isl02", subject:"islamiat", chapter:"2", classLevel:"both", difficulty:"easy",
+        question:"مسلمان دن میں کتنی فرض نمازیں ادا کرتے ہیں؟",
+        options:["تین","چار","پانچ","چھ"], answer:2,
+        explanation:"روزانہ پانچ فرض نمازیں ادا کی جاتی ہیں۔"
+    },
+    {
+        id:"isl03", subject:"islamiat", chapter:"3", classLevel:"both", difficulty:"medium",
+        question:"قرآن مجید کس زبان میں نازل ہوا؟",
+        options:["فارسی","عربی","عبرانی","اردو"], answer:1,
+        explanation:"قرآن مجید عربی زبان میں نازل ہوا۔"
+    },
+
+    // TARJUMATUL QURAN
+    {
+        id:"tarjuma01", subject:"tarjuma", chapter:"1", classLevel:"both", difficulty:"easy",
+        question:"سورۃ الفاتحہ قرآن مجید کی کون سی سورت ہے؟",
+        options:["پہلی","دوسری","تیسری","چوتھی"], answer:0,
+        explanation:"سورۃ الفاتحہ قرآن مجید کی پہلی سورت ہے۔"
+    },
+    {
+        id:"tarjuma02", subject:"tarjuma", chapter:"2", classLevel:"both", difficulty:"easy",
+        question:"قرآن مجید کی سب سے طویل سورت کون سی ہے؟",
+        options:["آل عمران","البقرہ","النساء","المائدہ"], answer:1,
+        explanation:"سورۃ البقرہ قرآن مجید کی سب سے طویل سورت ہے۔"
+    },
+    {
+        id:"tarjuma03", subject:"tarjuma", chapter:"3", classLevel:"both", difficulty:"medium",
+        question:"قرآن مجید میں کتنی سورتیں ہیں؟",
+        options:["110","112","114","116"], answer:2,
+        explanation:"قرآن مجید میں 114 سورتیں ہیں۔"
+    }
+];
+
+const SUBJECTS = [
+    {id:"biology", name:"Biology", count:15, type:"Unit", description:"Cell biology, molecules, genetics and more."},
+    {id:"physics", name:"Physics", count:14, type:"Unit", description:"Measurements, motion, forces and physical laws."},
+    {id:"chemistry", name:"Chemistry", count:22, type:"Unit", description:"Chemical bonding, matter, reactions and more."},
+    {id:"mathematics", name:"Mathematics", count:15, type:"Unit", description:"Concepts, formulas and mathematical practice."},
+    {id:"computer", name:"Computer Science", count:12, type:"Unit", description:"Computing concepts, systems and programming."},
+    {id:"english", name:"English", categories:[["grammar","Grammar"],["creative-writing","Creative Writing"]], description:"Grammar, language skills and writing."},
+    {id:"urdu", name:"Urdu", categories:[["grammar","Grammar"],["creative-writing","Creative Writing"]], description:"اردو قواعد اور تخلیقی تحریر"},
+    {id:"islamiat", name:"Islamiat", count:7, type:"Baab", description:"Baab-wise Islamiat practice."},
+    {id:"tarjuma", name:"Tarjumatul Quran", count:8, type:"Surah", description:"Surah-wise translation practice."}
+];
+
+const $ = id => document.getElementById(id);
+
+const selectionSection = $("selectionSection");
+const quizSection = $("quizSection");
+const resultsSection = $("resultsSection");
+const subjectSelect = $("subjectSelect");
+const quizType = $("quizType");
+const chapterSelect = $("chapterSelect");
+const chapterField = $("chapterField");
+const chapterCountField = $("chapterCountField");
+
+let currentQuestions = [];
+let currentIndex = 0;
+let answers = {};
+let flagged = new Set();
+let quizMode = "exam";
+let timerInterval = null;
+let secondsRemaining = 0;
+let quizFinished = false;
+let quizInfo = {};
+let reviewOnly = false;
+
+function shuffle(array) {
+    const copy = [...array];
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+}
+
+function getSubject(id) {
+    return SUBJECTS.find(subject => subject.id === id);
+}
+
+function getChapterLabel(subject, chapter) {
+    if (subject.categories) {
+        const category = subject.categories.find(item => item[0] === chapter);
+        return category ? category[1] : chapter;
+    }
+
+    return subject.type + " No. " + String(chapter).padStart(2, "0");
+}
+
+function buildSubjectCards() {
+    const grid = $("subjectGrid");
+    grid.innerHTML = "";
+
+    SUBJECTS.forEach(subject => {
+        const card = document.createElement("article");
+        card.className = "subject-card";
+
+        const countText = subject.count
+            ? subject.count + " " + subject.type.toLowerCase() + "s"
+            : "Grammar & Creative Writing";
+
+        card.innerHTML = `
+            <h3>${subject.name}</h3>
+            <p>${subject.description}</p>
+            <p style="min-height:0;margin-top:-7px;color:var(--green)">
+                ${countText}
+            </p>
+            <div class="subject-actions">
+                <button class="small-btn" data-subject="${subject.id}" data-type="15">15 MCQs</button>
+                <button class="small-btn" data-subject="${subject.id}" data-type="30">30 MCQs</button>
+                <button class="small-btn primary" data-subject="${subject.id}" data-type="80">80 MCQs</button>
+                <button class="small-btn" data-subject="${subject.id}" data-type="book">Full Book</button>
+                <button class="small-btn" data-subject="${subject.id}" data-type="chapter">Chapter-wise</button>
+            </div>
+        `;
+
+        grid.appendChild(card);
+    });
+
+    grid.querySelectorAll("button").forEach(button => {
+        button.addEventListener("click", () => {
+            subjectSelect.value = button.dataset.subject;
+            quizType.value = button.dataset.type;
+            updateChapterOptions();
+            $("setupPanel").scrollIntoView({behavior:"smooth", block:"start"});
+        });
+    });
+}
+
+function buildSubjectSelect() {
+    subjectSelect.innerHTML = "";
+
+    SUBJECTS.forEach(subject => {
+        const option = document.createElement("option");
+        option.value = subject.id;
+        option.textContent = subject.name;
+        subjectSelect.appendChild(option);
+    });
+}
+
+function updateChapterOptions() {
+    const subject = getSubject(subjectSelect.value);
+    chapterSelect.innerHTML = "";
+
+    if (subject.categories) {
+        subject.categories.forEach(category => {
+            const option = document.createElement("option");
+            option.value = category[0];
+            option.textContent = category[1];
+            chapterSelect.appendChild(option);
+        });
+    } else {
+        for (let i = 1; i <= subject.count; i++) {
+            const option = document.createElement("option");
+            option.value = String(i);
+            option.textContent = getChapterLabel(subject, String(i));
+            chapterSelect.appendChild(option);
+        }
+    }
+
+    const chapterMode = quizType.value === "chapter";
+    chapterField.classList.toggle("hidden", !chapterMode);
+    chapterCountField.classList.toggle("hidden", !chapterMode);
+}
+
+function getRequestedCount() {
+    if (quizType.value === "chapter") {
+        return Number($("chapterCount").value);
+    }
+
+    if (quizType.value === "book") {
+        return Infinity;
+    }
+
+    return Number(quizType.value);
+}
+
+function getMatchingQuestions() {
+    const subjectId = subjectSelect.value;
+    const subject = getSubject(subjectId);
+    const classChoice = $("classSelect").value;
+    const difficulty = $("difficultySelect").value;
+
+    let questions = QUESTION_BANK.filter(question => question.subject === subjectId);
+
+    if (quizType.value === "chapter") {
+        const chapter = chapterSelect.value;
+        questions = questions.filter(question => question.chapter === chapter);
+    }
+
+    if (classChoice !== "both") {
+        questions = questions.filter(question =>
+            question.classLevel === classChoice || question.classLevel === "both"
+        );
+    }
+
+    if (difficulty !== "all") {
+        questions = questions.filter(question => question.difficulty === difficulty);
+    }
+
+    return {questions, subject};
+}
+
+function getRequestedQuizLabel() {
+    if (quizType.value === "chapter") {
+        return getChapterLabel(getSubject(subjectSelect.value), chapterSelect.value);
+    }
+    if (quizType.value === "book") return "Full Book";
+    return quizType.value + " MCQs";
+}
+
+$("setupForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const {questions, subject} = getMatchingQuestions();
+    const requestedCount = getRequestedCount();
+
+    if (questions.length === 0) {
+        alert("No sample questions match these settings. Try another chapter, class, or difficulty.");
+        return;
+    }
+
+    currentQuestions = shuffle(questions).slice(0, requestedCount);
+    currentIndex = 0;
+    answers = {};
+    flagged = new Set();
+    quizFinished = false;
+    reviewOnly = false;
+    quizMode = document.querySelector('input[name="mode"]:checked').value;
+
+    quizInfo = {
+        subject: subject.name,
+        subjectId: subject.id,
+        type: getRequestedQuizLabel(),
+        requestedCount,
+        actualCount: currentQuestions.length,
+        mode: quizMode
+    };
+
+    // 30 seconds per question. Minimum timer is 1 minute.
+    secondsRemaining = Math.max(60, currentQuestions.length * 30);
+
+    $("quizHeading").textContent = subject.name + " — " + quizInfo.type;
+    $("marksLabel").textContent = "0.5 marks per question";
+    $("quizSection").classList.remove("hidden");
+    $("resultsSection").classList.add("hidden");
+    selectionSection.classList.add("hidden");
+
+    const setupNotice = $("setupNotice");
+    if (currentQuestions.length < requestedCount) {
+        setupNotice.textContent =
+            "This sample bank has " + currentQuestions.length +
+            " matching question(s), but you requested " + requestedCount +
+            ". The quiz will use the available questions. Add more questions to reach the requested length.";
+    }
+
+    renderQuestion();
+    renderNavigator();
+    updateTimerDisplay();
+    startTimer();
+
+    window.scrollTo({top:0, behavior:"smooth"});
+});
+
+function startTimer() {
+    clearInterval(timerInterval);
+
+    timerInterval = setInterval(() => {
+        if (quizFinished || reviewOnly) return;
+
+        secondsRemaining--;
+        updateTimerDisplay();
+
+        if (secondsRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert("Time is over. Your quiz will now be submitted.");
+            finishQuiz(true);
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(Math.max(0, secondsRemaining) / 60);
+    const seconds = Math.max(0, secondsRemaining) % 60;
+
+    $("timerDisplay").textContent =
+        String(minutes).padStart(2,"0") + ":" + String(seconds).padStart(2,"0");
+
+    $("timerDisplay").classList.toggle("low", secondsRemaining <= 60);
+}
+
+function renderQuestion() {
+    const question = currentQuestions[currentIndex];
+    if (!question) return;
+
+    $("questionCounter").textContent =
+        "Question " + (currentIndex + 1) + " of " + currentQuestions.length;
+
+    $("answeredCounter").textContent =
+        "Answered: " + Object.keys(answers).length;
+
+    $("questionNumber").textContent =
+        "QUESTION " + String(currentIndex + 1).padStart(2,"0");
+
+    $("questionText").textContent = question.question;
+    $("progressFill").style.width =
+        ((currentIndex + 1) / currentQuestions.length * 100) + "%";
+
+    $("prevBtn").disabled = currentIndex === 0;
+    $("nextBtn").disabled = currentIndex === currentQuestions.length - 1;
+
+    const optionsContainer = $("optionsContainer");
+    optionsContainer.innerHTML = "";
+
+    question.options.forEach((optionText, optionIndex) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "option";
+        button.innerHTML =
+            '<span class="option-letter">' + String.fromCharCode(65 + optionIndex) +
+            '</span><span></span>';
+        button.querySelector("span:last-child").textContent = optionText;
+
+        if (answers[question.id] === optionIndex) {
+            button.classList.add("selected");
+        }
+
+        if (quizMode === "practice" && answers[question.id] !== undefined) {
+            if (optionIndex === question.answer) {
+                button.classList.add("correct");
+            } else if (answers[question.id] === optionIndex) {
+                button.classList.add("incorrect");
+            }
+        }
+
+        button.disabled = quizFinished || reviewOnly ||
+            (quizMode === "practice" && answers[question.id] !== undefined);
+
+        button.addEventListener("click", () => selectAnswer(optionIndex));
+        optionsContainer.appendChild(button);
+    });
+
+    const feedback = $("feedback");
+    feedback.className = "hidden";
+    feedback.textContent = "";
+
+    if (quizMode === "practice" && answers[question.id] !== undefined) {
+        const isCorrect = answers[question.id] === question.answer;
+        feedback.className = "feedback " + (isCorrect ? "correct" : "incorrect");
+        feedback.textContent =
+            (isCorrect ? "Correct! " : "Not quite. ") +
+            "Answer: " + question.options[question.answer] +
+            (question.explanation ? " — " + question.explanation : "");
+    }
+
+    $("flagBtn").textContent = flagged.has(question.id)
+        ? "★ Marked for Review" : "☆ Mark for Review";
+
+    renderNavigator();
+}
+
+function selectAnswer(optionIndex) {
+    if (quizFinished || reviewOnly) return;
+
+    const question = currentQuestions[currentIndex];
+    if (quizMode === "practice" && answers[question.id] !== undefined) return;
+
+    answers[question.id] = optionIndex;
+
+    renderQuestion();
+}
+
+function renderNavigator() {
+    const navigation = $("questionNavigation");
+    navigation.innerHTML = "";
+
+    currentQuestions.forEach((question, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "number-btn";
+        button.textContent = index + 1;
+        button.setAttribute("aria-label", "Go to question " + (index + 1));
+
+        if (answers[question.id] !== undefined) button.classList.add("answered");
+        if (index === currentIndex) button.classList.add("current");
+        if (flagged.has(question.id)) button.classList.add("flagged");
+
+        button.addEventListener("click", () => {
+            currentIndex = index;
+            renderQuestion();
+        });
+
+        navigation.appendChild(button);
+    });
+}
+
+$("prevBtn").addEventListener("click", () => {
+    if (currentIndex > 0) {
+        currentIndex--;
+        renderQuestion();
+    }
+});
+
+$("nextBtn").addEventListener("click", () => {
+    if (currentIndex < currentQuestions.length - 1) {
+        currentIndex++;
+        renderQuestion();
+    }
+});
+
+$("flagBtn").addEventListener("click", () => {
+    const id = currentQuestions[currentIndex].id;
+
+    if (flagged.has(id)) flagged.delete(id);
+    else flagged.add(id);
+
+    renderQuestion();
+});
+
+$("submitBtn").addEventListener("click", () => {
+    const unanswered = currentQuestions.filter(q => answers[q.id] === undefined).length;
+
+    const message = unanswered > 0
+        ? "You have " + unanswered + " unanswered question(s). Submit anyway?"
+        : "Are you sure you want to submit your quiz?";
+
+    if (confirm(message)) finishQuiz(false);
+});
+
+$("cancelQuizBtn").addEventListener("click", () => {
+    if (confirm("Cancel this quiz? Your current answers will not be saved.")) {
+        clearInterval(timerInterval);
+        quizFinished = true;
+        quizSection.classList.add("hidden");
+        selectionSection.classList.remove("hidden");
+        window.scrollTo({top:0, behavior:"smooth"});
+    }
+});
+
+function finishQuiz(timeExpired) {
+    if (quizFinished) return;
+
+    quizFinished = true;
+    clearInterval(timerInterval);
+
+    const correct = currentQuestions.filter(q => answers[q.id] === q.answer).length;
+    const answered = currentQuestions.filter(q => answers[q.id] !== undefined).length;
+    const wrong = answered - correct;
+    const unanswered = currentQuestions.length - answered;
+    const score = correct * 0.5;
+    const maximum = currentQuestions.length * 0.5;
+    const percentage = maximum ? (score / maximum) * 100 : 0;
+
+    $("scoreDisplay").textContent =
+        score.toFixed(1).replace(/\.0$/, "") + " / " +
+        maximum.toFixed(1).replace(/\.0$/, "");
+
+    $("percentageDisplay").textContent =
+        "Percentage: " + percentage.toFixed(1) + "%";
+
+    $("correctCount").textContent = correct;
+    $("wrongCount").textContent = wrong;
+    $("unansweredCount").textContent = unanswered;
+    $("totalCount").textContent = currentQuestions.length;
+
+    $("resultSubtitle").textContent =
+        quizInfo.subject + " · " + quizInfo.type + " · " +
+        (quizInfo.mode === "exam" ? "Exam Mode" : "Practice Mode");
+
+    $("resultNotice").textContent =
+        (timeExpired ? "Time expired. " : "") +
+        "Each correct answer earns 0.5 marks. No negative marking. " +
+        "Results are calculated from this attempt; they are not saved to an account yet.";
+
+    quizSection.classList.add("hidden");
+    resultsSection.classList.remove("hidden");
+    $("reviewContainer").classList.add("hidden");
+    $("reviewBtn").textContent = "Review Answers";
+
+    window.scrollTo({top:0, behavior:"smooth"});
+}
+
+$("reviewBtn").addEventListener("click", () => {
+    const reviewContainer = $("reviewContainer");
+
+    if (!reviewContainer.classList.contains("hidden")) {
+        reviewContainer.classList.add("hidden");
+        $("reviewBtn").textContent = "Review Answers";
+        return;
+    }
+
+    const list = $("reviewList");
+    list.innerHTML = "";
+
+    currentQuestions.forEach((question, index) => {
+        const selected = answers[question.id];
+        const correct = selected === question.answer;
+        const item = document.createElement("article");
+        item.className = "review-item";
+
+        const heading = document.createElement("strong");
+        heading.textContent = (index + 1) + ". " + question.question;
+        item.appendChild(heading);
+
+        const yourAnswer = document.createElement("p");
+        yourAnswer.className = correct ? "answer-good" : "answer-bad";
+        yourAnswer.textContent = "Your answer: " +
+            (selected === undefined ? "Not answered" : question.options[selected]);
+        item.appendChild(yourAnswer);
+
+        const correctAnswer = document.createElement("p");
+        correctAnswer.className = "answer-good";
+        correctAnswer.textContent = "Correct answer: " + question.options[question.answer];
+        item.appendChild(correctAnswer);
+
+        if (question.explanation) {
+            const explanation = document.createElement("p");
+            explanation.style.color = "var(--muted)";
+            explanation.textContent = "Explanation: " + question.explanation;
+            item.appendChild(explanation);
+        }
+
+        list.appendChild(item);
+    });
+
+    reviewContainer.classList.remove("hidden");
+    $("reviewBtn").textContent = "Hide Answer Review";
+});
+
+$("newQuizBtn").addEventListener("click", () => {
+    resultsSection.classList.add("hidden");
+    selectionSection.classList.remove("hidden");
+    $("reviewContainer").classList.add("hidden");
+    window.scrollTo({top:0, behavior:"smooth"});
+});
+
+quizType.addEventListener("change", updateChapterOptions);
+subjectSelect.addEventListener("change", updateChapterOptions);
+
+$("currentYear").textContent = new Date().getFullYear();
+
+const menuToggle = $("menuToggle");
+const navLinks = $("navLinks");
+
+menuToggle.addEventListener("click", () => {
+    const isOpen = navLinks.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.textContent = isOpen ? "✕" : "☰";
+});
+
+navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.textContent = "☰";
+    });
+});
+
+buildSubjectCards();
+buildSubjectSelect();
+updateChapterOptions();
+</script>
+
+</body>
+</html>

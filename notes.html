@@ -1,0 +1,772 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notes | Knowledge Point EDU HUB</title>
+
+    <meta name="description" content="Subject-wise notes, units, grammar, creative writing, Islamiat Baabs and Tarjumatul Quran for HSSC students.">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        :root {
+            --notes-gold: #f5c542;
+            --notes-green: #20c997;
+            --notes-dark: #0b0d12;
+            --notes-card: #141821;
+            --notes-border: rgba(255, 255, 255, 0.10);
+            --notes-muted: #a7afbd;
+        }
+
+        body {
+            background: var(--notes-dark);
+            color: #f4f5f7;
+        }
+
+        .notes-hero {
+            padding: 65px 20px 40px;
+            text-align: center;
+            background:
+                radial-gradient(ellipse at top, rgba(245, 197, 66, 0.13), transparent 65%);
+        }
+
+        .notes-hero h1 {
+            font-size: clamp(30px, 5vw, 48px);
+            margin-bottom: 12px;
+        }
+
+        .notes-hero h1 span {
+            color: var(--notes-gold);
+        }
+
+        .notes-hero p {
+            color: var(--notes-muted);
+            max-width: 680px;
+            margin: 0 auto 25px;
+            line-height: 1.7;
+        }
+
+        .notes-search {
+            width: min(100%, 650px);
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .notes-search input {
+            width: 100%;
+            padding: 15px 18px;
+            border: 1px solid var(--notes-border);
+            border-radius: 12px;
+            outline: none;
+            color: #fff;
+            background: var(--notes-card);
+            font-size: 15px;
+        }
+
+        .notes-search input:focus {
+            border-color: var(--notes-gold);
+            box-shadow: 0 0 0 3px rgba(245, 197, 66, 0.1);
+        }
+
+        .notes-summary {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 15px;
+            max-width: 850px;
+            margin: 30px auto 0;
+        }
+
+        .summary-box {
+            padding: 17px 10px;
+            border: 1px solid var(--notes-border);
+            background: rgba(255, 255, 255, 0.025);
+            border-radius: 12px;
+        }
+
+        .summary-box strong {
+            display: block;
+            color: var(--notes-gold);
+            font-size: 25px;
+            margin-bottom: 5px;
+        }
+
+        .summary-box span {
+            color: var(--notes-muted);
+            font-size: 13px;
+        }
+
+        .subject-navigation {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 10px 20px 35px;
+        }
+
+        .subject-navigation a {
+            display: inline-block;
+            text-decoration: none;
+            color: #f4f5f7;
+            border: 1px solid var(--notes-border);
+            border-radius: 30px;
+            padding: 9px 15px;
+            font-size: 13px;
+            transition: 0.2s ease;
+        }
+
+        .subject-navigation a:hover {
+            color: var(--notes-gold);
+            border-color: var(--notes-gold);
+        }
+
+        .notes-main {
+            width: min(1180px, 92%);
+            margin: 0 auto 60px;
+        }
+
+        .subject-section {
+            margin-bottom: 28px;
+            scroll-margin-top: 100px;
+            border: 1px solid var(--notes-border);
+            background: var(--notes-card);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .subject-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 21px 24px;
+            cursor: pointer;
+            list-style: none;
+        }
+
+        .subject-heading::-webkit-details-marker {
+            display: none;
+        }
+
+        .subject-heading h2 {
+            margin: 0 0 5px;
+            font-size: 21px;
+        }
+
+        .subject-heading p {
+            margin: 0;
+            color: var(--notes-muted);
+            font-size: 13px;
+        }
+
+        .subject-heading .subject-count {
+            color: var(--notes-gold);
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .subject-heading .arrow {
+            color: var(--notes-green);
+            display: inline-block;
+            margin-left: 8px;
+            transition: transform 0.2s ease;
+        }
+
+        .subject-section[open] .arrow {
+            transform: rotate(180deg);
+        }
+
+        .subject-content {
+            padding: 0 24px 24px;
+            border-top: 1px solid var(--notes-border);
+        }
+
+        .unit-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            padding-top: 20px;
+        }
+
+        .unit-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            min-height: 54px;
+            padding: 12px 14px;
+            border: 1px solid var(--notes-border);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.025);
+            color: #f4f5f7;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s ease;
+        }
+
+        .unit-link:hover {
+            border-color: var(--notes-green);
+            background: rgba(32, 201, 151, 0.07);
+            transform: translateY(-2px);
+        }
+
+        .unit-link .unit-icon {
+            color: var(--notes-green);
+            font-size: 17px;
+            flex-shrink: 0;
+        }
+
+        .category-label {
+            color: var(--notes-gold);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 22px 0 0;
+        }
+
+        .empty-message {
+            display: none;
+            text-align: center;
+            color: var(--notes-muted);
+            padding: 30px 15px;
+            line-height: 1.7;
+        }
+
+        .notes-footer {
+            text-align: center;
+            color: var(--notes-muted);
+            padding: 25px 15px;
+            border-top: 1px solid var(--notes-border);
+            font-size: 13px;
+        }
+
+        @media (max-width: 800px) {
+            .unit-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 520px) {
+            .notes-hero {
+                padding-top: 42px;
+            }
+
+            .notes-summary {
+                gap: 8px;
+            }
+
+            .summary-box {
+                padding: 13px 5px;
+            }
+
+            .summary-box strong {
+                font-size: 21px;
+            }
+
+            .summary-box span {
+                font-size: 11px;
+            }
+
+            .subject-heading {
+                padding: 18px 15px;
+            }
+
+            .subject-heading h2 {
+                font-size: 17px;
+            }
+
+            .subject-heading p {
+                font-size: 12px;
+            }
+
+            .subject-content {
+                padding: 0 14px 17px;
+            }
+
+            .unit-grid {
+                grid-template-columns: 1fr;
+                gap: 9px;
+            }
+
+            .unit-link {
+                min-height: 48px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <nav class="navbar container">
+
+            <a href="index.html" class="logo">
+                <span class="logo-text">
+                    <span class="logo-title">KNOWLEDGE POINT</span>
+                    <span class="logo-subtitle">EDU HUB</span>
+                </span>
+
+                <span class="logo-circle">
+                    <img
+                        src="assets/images/logo.png"
+                        alt="Knowledge Point Logo"
+                        class="logo-image">
+                </span>
+            </a>
+
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                type="button"
+                aria-label="Toggle navigation"
+                aria-expanded="false">
+                ☰
+            </button>
+
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="notes.html" class="active">Notes</a>
+                <a href="quiz.html">Quiz</a>
+                <a href="past-papers.html">Past Papers</a>
+                <a href="progress.html">Progress</a>
+                <a href="contact.html">Contact</a>
+            </div>
+
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="notes-hero">
+        <h1>Study <span>Notes</span></h1>
+
+        <p>
+            Find your subject, select a unit, and organize your HSSC
+            preparation with Knowledge Point EDU HUB.
+        </p>
+
+        <div class="notes-search">
+            <input
+                type="search"
+                id="notesSearch"
+                placeholder="Search a subject, unit, baab or surah..."
+                aria-label="Search notes">
+        </div>
+
+        <div class="notes-summary">
+            <div class="summary-box">
+                <strong>09</strong>
+                <span>Subjects</span>
+            </div>
+
+            <div class="summary-box">
+                <strong id="unitTotal">115</strong>
+                <span>Units and categories</span>
+            </div>
+
+            <div class="summary-box">
+                <strong>HSSC</strong>
+                <span>Part I &amp; II</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subject quick navigation -->
+    <nav class="subject-navigation" id="subjectNavigation" aria-label="Subject navigation">
+        <a href="#biology">Biology</a>
+        <a href="#physics">Physics</a>
+        <a href="#chemistry">Chemistry</a>
+        <a href="#english">English</a>
+        <a href="#urdu">Urdu</a>
+        <a href="#islamiat">Islamiat</a>
+        <a href="#tarjuma">Tarjumatul Quran</a>
+        <a href="#mathematics">Mathematics</a>
+        <a href="#computer">Computer Science</a>
+    </nav>
+
+    <!-- Subject sections are generated below -->
+    <main class="notes-main">
+        <div id="subjectsContainer"></div>
+
+        <div class="empty-message" id="emptyMessage">
+            <h3>No matching notes found</h3>
+            <p>Try searching with a different subject or unit number.</p>
+        </div>
+    </main>
+
+    <footer class="notes-footer">
+        <p>
+            &copy; <span id="currentYear"></span>
+            Knowledge Point EDU HUB. Learn today, lead tomorrow.
+        </p>
+    </footer>
+
+    <script>
+        // All subject and unit information is managed here.
+        const subjects = [
+            {
+                id: "biology",
+                name: "Biology",
+                description: "Biology notes and chapter-wise study material",
+                type: "Unit",
+                count: 15
+            },
+            {
+                id: "physics",
+                name: "Physics",
+                description: "Physics concepts, explanations and exercises",
+                type: "Unit",
+                count: 14
+            },
+            {
+                id: "chemistry",
+                name: "Chemistry",
+                description: "Chemistry notes and chapter-wise preparation",
+                type: "Unit",
+                count: 22
+            },
+            {
+                id: "english",
+                name: "English",
+                description: "Grammar rules and creative writing practice",
+                categories: [
+                    {
+                        name: "Grammar",
+                        type: "Topic",
+                        count: 0,
+                        folder: "grammar"
+                    },
+                    {
+                        name: "Creative Writing",
+                        type: "Topic",
+                        count: 0,
+                        folder: "creative-writing"
+                    }
+                ]
+            },
+            {
+                id: "urdu",
+                name: "Urdu",
+                description: "Grammar and creative writing",
+                categories: [
+                    {
+                        name: "Grammar",
+                        type: "Topic",
+                        count: 0,
+                        folder: "grammar"
+                    },
+                    {
+                        name: "Creative Writing",
+                        type: "Topic",
+                        count: 0,
+                        folder: "creative-writing"
+                    }
+                ]
+            },
+            {
+                id: "islamiat",
+                name: "Islamiat",
+                description: "Baab-wise Islamiat notes",
+                type: "Baab",
+                count: 7
+            },
+            {
+                id: "tarjuma",
+                name: "Tarjumatul Quran",
+                description: "Surah-wise translation and study notes",
+                type: "Surah",
+                count: 8
+            },
+            {
+                id: "mathematics",
+                name: "Mathematics",
+                description: "Mathematical concepts, formulas and exercises",
+                type: "Unit",
+                count: 15
+            },
+            {
+                id: "computer",
+                name: "Computer Science",
+                description: "Computer Science notes and chapter-wise material",
+                type: "Unit",
+                count: 12
+            }
+        ];
+
+        const container = document.getElementById("subjectsContainer");
+        const searchInput = document.getElementById("notesSearch");
+        const emptyMessage = document.getElementById("emptyMessage");
+
+        // Convert a number into a two-digit number, e.g. 1 -> 01.
+        function twoDigits(number) {
+            return String(number).padStart(2, "0");
+        }
+
+        // Build a path for the notes PDF.
+        function makePdfPath(subjectId, folder, number) {
+            return "pdfs/" + subjectId + "/" + folder +
+                "-" + twoDigits(number) + ".pdf";
+        }
+
+        function createUnitLink(subject, type, number, folder) {
+            const label = type + " No. " + twoDigits(number);
+            const link = document.createElement("a");
+
+            link.className = "unit-link";
+            link.href = makePdfPath(subject.id, folder, number);
+            link.target = "_blank";
+            link.rel = "noopener";
+            link.dataset.search = (
+                subject.name + " " + label
+            ).toLowerCase();
+
+            link.innerHTML = `
+                <span>${label}</span>
+                <span class="unit-icon" aria-hidden="true">↗</span>
+            `;
+
+            link.addEventListener("click", function(event) {
+                // The PDFs must exist at these paths for the links to work.
+                // If they have not been uploaded, show a helpful message.
+                event.preventDefault();
+
+                const pdfPath = link.getAttribute("href");
+
+                fetch(pdfPath, { method: "HEAD" })
+                    .then(response => {
+                        if (response.ok) {
+                            window.open(pdfPath, "_blank", "noopener");
+                        } else {
+                            alert(
+                                label + " notes have not been uploaded yet.\n\n" +
+                                "Expected file: " + pdfPath
+                            );
+                        }
+                    })
+                    .catch(() => {
+                        alert(
+                            label + " notes have not been uploaded yet.\n\n" +
+                            "Expected file: " + pdfPath
+                        );
+                    });
+            });
+
+            return link;
+        }
+
+        function createCategoryLink(subject, category) {
+            const link = document.createElement("a");
+
+            link.className = "unit-link";
+            link.href = "pdfs/" + subject.id + "/" + category.folder + ".pdf";
+            link.dataset.search = (
+                subject.name + " " + category.name
+            ).toLowerCase();
+
+            link.innerHTML = `
+                <span>${category.name}</span>
+                <span class="unit-icon" aria-hidden="true">↗</span>
+            `;
+
+            link.addEventListener("click", function(event) {
+                event.preventDefault();
+
+                const pdfPath = link.getAttribute("href");
+
+                fetch(pdfPath, { method: "HEAD" })
+                    .then(response => {
+                        if (response.ok) {
+                            window.open(pdfPath, "_blank", "noopener");
+                        } else {
+                            alert(
+                                category.name + " notes have not been uploaded yet.\n\n" +
+                                "Expected file: " + pdfPath
+                            );
+                        }
+                    })
+                    .catch(() => {
+                        alert(
+                            category.name + " notes have not been uploaded yet.\n\n" +
+                            "Expected file: " + pdfPath
+                        );
+                    });
+            });
+
+            return link;
+        }
+
+        function renderSubjects() {
+            container.innerHTML = "";
+
+            subjects.forEach((subject, index) => {
+                const section = document.createElement("details");
+                section.className = "subject-section";
+                section.id = subject.id;
+
+                // Keep the first subject open initially.
+                if (index === 0) {
+                    section.open = true;
+                }
+
+                const itemCount = subject.count ??
+                    subject.categories.length;
+
+                const heading = document.createElement("summary");
+                heading.className = "subject-heading";
+
+                heading.innerHTML = `
+                    <div>
+                        <h2>${subject.name}</h2>
+                        <p>${subject.description}</p>
+                    </div>
+                    <span class="subject-count">
+                        ${itemCount} ${subject.count !== undefined
+                            ? "Units" : "Categories"}
+                        <span class="arrow">⌄</span>
+                    </span>
+                `;
+
+                const content = document.createElement("div");
+                content.className = "subject-content";
+
+                const grid = document.createElement("div");
+                grid.className = "unit-grid";
+
+                if (subject.count !== undefined) {
+                    for (let i = 1; i <= subject.count; i++) {
+                        grid.appendChild(
+                            createUnitLink(
+                                subject,
+                                subject.type,
+                                i,
+                                "unit"
+                            )
+                        );
+                    }
+
+                    // Use baab and surah in the PDF folder names too.
+                    if (subject.id === "islamiat") {
+                        grid.innerHTML = "";
+
+                        for (let i = 1; i <= subject.count; i++) {
+                            grid.appendChild(
+                                createUnitLink(
+                                    subject,
+                                    "Baab",
+                                    i,
+                                    "baab"
+                                )
+                            );
+                        }
+                    }
+
+                    if (subject.id === "tarjuma") {
+                        grid.innerHTML = "";
+
+                        for (let i = 1; i <= subject.count; i++) {
+                            grid.appendChild(
+                                createUnitLink(
+                                    subject,
+                                    "Surah",
+                                    i,
+                                    "surah"
+                                )
+                            );
+                        }
+                    }
+
+                    content.appendChild(grid);
+                } else {
+                    const categoryLabel = document.createElement("p");
+                    categoryLabel.className = "category-label";
+                    categoryLabel.textContent = "Choose a category";
+                    content.appendChild(categoryLabel);
+
+                    subject.categories.forEach(category => {
+                        const categoryGrid = document.createElement("div");
+                        categoryGrid.className = "unit-grid";
+                        categoryGrid.appendChild(
+                            createCategoryLink(subject, category)
+                        );
+                        content.appendChild(categoryGrid);
+                    });
+                }
+
+                section.appendChild(heading);
+                section.appendChild(content);
+                container.appendChild(section);
+            });
+        }
+
+        function filterSubjects() {
+            const query = searchInput.value.trim().toLowerCase();
+            let visibleCount = 0;
+
+            document.querySelectorAll(".subject-section").forEach(section => {
+                const subject = subjects.find(item => item.id === section.id);
+                const subjectMatches = subject.name.toLowerCase().includes(query);
+                const links = section.querySelectorAll(".unit-link");
+                let matchingLinks = 0;
+
+                links.forEach(link => {
+                    const matches = !query ||
+                        subjectMatches ||
+                        link.dataset.search.includes(query);
+
+                    link.style.display = matches ? "flex" : "none";
+
+                    if (matches) {
+                        matchingLinks++;
+                    }
+                });
+
+                const sectionMatches = !query ||
+                    subjectMatches ||
+                    matchingLinks > 0;
+
+                section.style.display = sectionMatches ? "block" : "none";
+
+                if (sectionMatches) {
+                    visibleCount++;
+
+                    if (query) {
+                        section.open = true;
+                    }
+                }
+            });
+
+            emptyMessage.style.display =
+                visibleCount === 0 ? "block" : "none";
+        }
+
+        renderSubjects();
+
+        searchInput.addEventListener("input", filterSubjects);
+
+        document.getElementById("currentYear").textContent =
+            new Date().getFullYear();
+
+        // Mobile navigation toggle.
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        menuToggle.addEventListener("click", function() {
+            const isOpen = navLinks.classList.toggle("open");
+            menuToggle.setAttribute("aria-expanded", String(isOpen));
+            menuToggle.textContent = isOpen ? "✕" : "☰";
+        });
+
+        navLinks.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", function() {
+                navLinks.classList.remove("open");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.textContent = "☰";
+            });
+        });
+    </script>
+
+</body>
+</html>
